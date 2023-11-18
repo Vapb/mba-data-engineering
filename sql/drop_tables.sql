@@ -1,0 +1,10 @@
+-- Drop / Truncate Tables
+TRUNCATE TABLE anuncio CASCADE;
+TRUNCATE TABLE produto CASCADE;
+TRUNCATE TABLE departamento CASCADE;
+TRUNCATE TABLE supermercado CASCADE;
+
+DROP TABLE anuncio CASCADE;
+DROP TABLE produto CASCADE;
+DROP TABLE departamento CASCADE;
+DROP TABLE supermercado CASCADE;

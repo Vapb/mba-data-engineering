@@ -2,12 +2,12 @@ import os
 from dotenv import load_dotenv
 from datetime import datetime
 from requests import Session
+from time import sleep
 from tools_utils import get_tree_from_url
 from tools_utils import extract_price
 from tools_utils import extract_url_code
 from tools_utils import process_text
 from db import PostgreSQLConnection
-from time import sleep
 
 
 # Base variables
@@ -49,13 +49,13 @@ def get_departments(session):
                     subName = sub.xpath(DEP_NAME)[0].text_content()
                     department["url"] = BASE_URL + sub.xpath(DEP_URL)[0]
                     department["hierarchy"] = process_text(depName + ' > ' + subName)
-                    department["id"] = f"COMP_{extract_url_code(department["url"])}"
+                    department["id"] = f"ARA_{extract_url_code(department["url"])}"
                     yield department
         
         else:
             department["url"] = BASE_URL + dep.xpath(DEP_URL)[0]
             department["hierarchy"] = process_text(depName)
-            department["id"] = f"COMP_{extract_url_code(department["url"])}"
+            department["id"] = f"ARA_{extract_url_code(department["url"])}"
             yield department
 
 
@@ -79,7 +79,7 @@ def extract_products(page):
     products_info = []
     for product in page.xpath(PRODUCTS): 
         product_url = BASE_URL + product.xpath('@href')[0]
-        product_sku = extract_url_code(product_url)
+        product_sku = f"ARA_{extract_url_code(product_url)}"
         product_name = process_text(product.xpath(PRODUCT_NAME)[0].text_content())
         product_brand = process_text(product.xpath(PRODUCT_BRAND)[0].text_content())
         
@@ -112,7 +112,6 @@ def extract_products(page):
                 'regular_price': regular_price
             }
         )
-
     return products_info
 
 
@@ -143,8 +142,7 @@ def main():
                     product['regular_price'],
                     collection_date
                 )
-            sleep(10) # 10 Seconds for Page
-    
+            sleep(45) # 45 Seconds for Page   
     conn.close_connection()
     return None
 

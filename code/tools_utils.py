@@ -10,7 +10,7 @@ def get_tree_from_url(session, url, cookies={}):
 
 def extract_price(price):
     price = price.replace('/kg', '')
-    return int(re.sub(r"\s|R|\$|,", "", price)) / 100
+    return int(re.sub(r"\s|R|\$|,|\.", "", price)) / 100
 
 
 def extract_url_code(url):

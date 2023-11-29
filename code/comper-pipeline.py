@@ -11,7 +11,6 @@ from tools_utils import extract_price
 from db import PostgreSQLConnection
 
 
-
 # Global vars
 BASE_URL = 'https://www.comper.com.br/'
 TOKEN_URL = "https://www.comper.com.br:443/api/sessions/"

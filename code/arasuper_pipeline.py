@@ -10,6 +10,8 @@ from tools_utils import process_text
 from db import PostgreSQLConnection
 
 
+# Add argparsers
+
 # Base variables
 BASE_URL = 'https://www.arasuper.com.br/'
 BASE_MKP =  7
@@ -125,14 +127,14 @@ def main():
     )
     conn.connect()
     for department in get_departments(session):
-        print('DEP: ', department)
+        print('INSERT DEP : ', department)
         conn.insert_department(
             department['id'], department['url'], department["hierarchy"]
         )
         for page in get_pages(session, department['url']):
             products = extract_products(page)
             for product in products:
-                print(product)
+                print("INSERT Product : ", product)
                 conn.insert_product(product['sku'], product["name"], product["brand"])
                 conn.insert_advertisement(
                     BASE_MKP,
@@ -142,7 +144,7 @@ def main():
                     product['regular_price'],
                     collection_date
                 )
-            sleep(45) # 45 Seconds for Page   
+            sleep(5) # 10 Seconds for Page   
     conn.close_connection()
     return None
 
